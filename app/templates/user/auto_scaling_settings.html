@@ -1,0 +1,67 @@
+{% extends "user/user_base.html" %} {% block content %}
+<h2>Auto Scaling Settings</h2>
+<br />
+<form action="/autoscaler" method="get">
+  <table class="table table-border">
+    <tr>
+      <td>CPU threshold for growing the worker pool:</td>
+      <td>
+        <input
+          type="number"
+          name="upperthres"
+          min="50"
+          max="100"
+          step="1"
+          required
+        />
+      </td>
+    </tr>
+    <tr>
+      <td>CPU threshold for shrinking the worker pool:</td>
+      <td>
+        <input
+          type="number"
+          name="lowerthres"
+          min="0"
+          max="50"
+          step="1"
+          required
+        />
+      </td>
+    </tr>
+    <tr>
+      <td>Ratio by which to expand the worker pool:</td>
+      <td>
+        <select name="expandratio">
+          <option value="1">1.0</option>
+          <option value="1.5">1.5</option>
+          <option value="2">2.0</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>Ratio by which to shrink the worker pool:</td>
+      <td>
+        <select name="shrinkratio">
+          <option value="1">1.0</option>
+          <option value="0.75">0.75</option>
+          <option value="0.5">0.5</option>
+        </select>
+      </td>
+    </tr>
+    <br />
+  </table>
+  <br />
+  <input type="submit" value="Confirm" class="btn btn-primary" />
+  <input type="reset" value="Reset" class="btn btn-primary" />
+</form>
+{% with messages = get_flashed_messages(with_categories=true) %} {% if messages
+%}
+<ul class="flashes">
+  {% for category, message in messages %} {% if category =='error'%}
+  <li style="color: red">{{ message }}</li>
+  {% else %}
+  <li style="color: green">{{ message }}</li>
+  {% endif %} {% endfor %}
+</ul>
+{% endif %} {% endwith %} {% endblock %}
