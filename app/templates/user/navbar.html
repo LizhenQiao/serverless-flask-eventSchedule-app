@@ -33,6 +33,13 @@
           >
         </li>
         <li class="nav-item">
+          <a
+            class="nav-link"
+            href="{{url_for('upload_avatar', user_name=session['username'])}}"
+            >Set Avatar</a
+          >
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="{{url_for('user_logout')}}">logout</a>
         </li>
 

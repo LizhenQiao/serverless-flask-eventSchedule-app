@@ -2,12 +2,21 @@ from flask import render_template, request, flash, url_for, session
 from app import webapp
 from app.config import KEY, SECRET
 import boto3
+import os
 from boto3.dynamodb.conditions import Key, Attr
 from passlib.hash import sha256_crypt
 from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from werkzeug.utils import redirect
 from .utils import login_required
+
+
+DEFAULT_AVATAR = "https://a3avatars.s3.amazonaws.com/default.jpg"
+
+dynamodb = boto3.resource('dynamodb',
+                          aws_access_key_id=KEY,
+                          aws_secret_access_key=SECRET,
+                          region_name='us-east-1')
 
 webapp.config['MAIL_SERVER'] = 'smtp.163.com'
 webapp.config['MAIL_PORT'] = 465
@@ -35,7 +44,8 @@ def register():
         password = request.form['password']
         email = request.form['email']
         if username == "" or password == "" or email == "":
-            flash("Error: Username, Password or Email can't be empty!", category='error')
+            flash("Error: Username, Password or Email can't be empty!",
+                  category='error')
             return render_template('user/register.html')
         response = dynamoTable.query(
             KeyConditionExpression=Key('user_name').eq(username)
@@ -75,7 +85,8 @@ def user_login():
             return render_template('main.html', title='Login')
         else:
             if not sha256_crypt.verify(password, items[0]['password']):
-                flash('Error password or username, please try again', category='error')
+                flash('Error password or username, please try again',
+                      category='error')
                 return render_template('main.html')
             else:
                 session['username'] = items[0]['user_name']
@@ -88,7 +99,14 @@ def user_login():
 @login_required
 def user_page(username):
     if username == session['username']:
-        return render_template('user/user_page.html', username=session['username'])
+        dynamoTable = dynamodb.Table('users')
+        res = dynamoTable.get_item(
+            Key={
+                'user_name': session['username'],
+            }
+        )
+        userAvatar = res['Item']['avatar'] if "avatar" in res['Item'] and res['Item']['avatar'] else DEFAULT_AVATAR
+        return render_template('user/user_page.html', username=session['username'], useravatar=userAvatar)
     else:
         flash('url not matched', category='error')
         return redirect(url_for('user_login'))
@@ -153,4 +171,3 @@ def reset_password(token):
 def user_logout():
     session.clear()
     return redirect(url_for('user_login'))
-

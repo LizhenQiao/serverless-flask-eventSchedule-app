@@ -1,0 +1,41 @@
+{% extends "user/user_base.html" %} {% block title %} upload {% endblock %}
+<!--                        -->
+{% block content %}
+<br />
+<div class="container">
+  <h1>Upload your image</h1>
+
+  <form
+    action="{{url_for('upload_avatar', user_name=session['user_name'])}}"
+    method="POST"
+    enctype="multipart/form-data"
+  >
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Upload avatar</label>
+      <input
+        type="file"
+        name="img"
+        class="form-control"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+        lang="en"
+      />
+      <label for="" style="color: red">*</label>
+      <label for="" style="font-style: italic"
+        >Only 'png', 'jpg', 'bmp' is allowed.</label
+      >
+    </div>
+    <button type="submit" class="btn btn-primary">Upload</button>
+  </form>
+  {% with messages = get_flashed_messages(with_categories=true) %} {% if
+  messages %}
+  <ul class="flashes">
+    {% for category, message in messages %} {% if category =='error'%}
+    <li style="color: red">{{ message }}</li>
+    {% else %}
+    <li style="color: green">{{ message }}</li>
+    {% endif %} {% endfor %}
+  </ul>
+  {% endif %} {% endwith %}
+</div>
+{% endblock %}
