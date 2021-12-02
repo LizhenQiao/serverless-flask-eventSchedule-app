@@ -6,7 +6,7 @@
   <h1>Upload your image</h1>
 
   <form
-    action="{{url_for('upload_avatar', user_name=session['user_name'])}}"
+    action="{{url_for('upload_avatar', user_name=session['username'])}}"
     method="POST"
     enctype="multipart/form-data"
   >
