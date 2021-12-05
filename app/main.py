@@ -10,7 +10,6 @@ from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from werkzeug.utils import redirect
 from .utils import login_required
 
-
 DEFAULT_AVATAR = "https://a3avatars.s3.amazonaws.com/default.jpg"
 
 dynamodb = boto3.resource('dynamodb',
@@ -57,7 +56,8 @@ def register():
                 Item={
                     'user_name': username,
                     'password': hash_password,
-                    'email': email
+                    'email': email,
+                    'event': []
                 }
             )
             flash('Register Successfully', category='info')

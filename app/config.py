@@ -1,6 +1,6 @@
-KEY= 'AKIASP5A2XKYZ6VXLB6B'
-SECRET='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'
-S3_BUCKET='bucketece1779'
+KEY= 'AKIASP5A2XKYXR76PBHJ'
+SECRET='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'
+S3_BUCKET='ece1779-image-bucket'
 S3_LOCATION='https://{}.s3.amazonaws.com/'.format(S3_BUCKET)
 # AMI_ID='ami-0390948ffde8938ac'
 AMI_ID='ami-04fb5d9759b2ebb5f'

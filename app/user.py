@@ -61,7 +61,7 @@ def upload_avatar(user_name):
             # set the cursor to the file's position
             f.seek(0, 2)
             file_length = f.tell()
-            if file_length > 1024*1024:
+            if file_length > 1024 * 1024:
                 flash('Error:Image size is too large', category='error')
                 return render_template('image/image_upload.html')
             # set the cursor back to the original position
@@ -96,3 +96,55 @@ def upload_avatar(user_name):
             return render_template('image/image_upload.html')
     else:
         return render_template('image/image_upload.html')
+
+
+# Add an event
+@webapp.route('/<string:user_name>/add_event', methods=['GET', 'POST'])
+@login_required
+def add_event(user_name):
+    if request.method == 'POST':
+        eventname= request.form['eventname']
+        starttime=request.form['starttime']
+        endtime=request.form['endtime']
+        dynamoTable = dynamodb.Table('users')
+        dynamoTable.update_item(
+            Key={
+                'user_name': session['username'],
+            },
+            UpdateExpression='SET event = list_append(:vals, event)',
+            ExpressionAttributeValues={
+                ':vals': [{'name': eventname,
+                           'start_time': starttime,
+                           'end_time': endtime}]
+            }
+        )
+        flash('Password change Successfully', category='info')
+        return
+    else:
+        return render_template('event/add_event.html')
+
+
+# Add an event
+@webapp.route('/<string:user_name>/remove_event', methods=['GET', 'POST'])
+@login_required
+def remove_event(user_name):
+    if request.method == 'POST':
+        eventname= request.form['eventname']
+        starttime=request.form['starttime']
+        endtime=request.form['endtime']
+        dynamoTable = dynamodb.Table('users')
+        dynamoTable.update_item(
+            Key={
+                'user_name': session['username'],
+            },
+            UpdateExpression='SET event = list_append(:vals, event)',
+            ExpressionAttributeValues={
+                ':vals': [{'name': eventname,
+                           'start_time': starttime,
+                           'end_time': endtime}]
+            }
+        )
+        flash('Password change Successfully', category='info')
+        return
+    else:
+        return render_template('event/remove_event.html')
