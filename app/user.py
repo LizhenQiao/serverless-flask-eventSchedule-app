@@ -100,7 +100,7 @@ def upload_avatar(user_name):
 
 
 # list all events
-@webapp.route('/<string:user_name>/list_event', methods=['GET'])
+@webapp.route('/<string:user_name>/list_event', methods=['GET', 'POST'])
 @login_required
 def list_event(user_name):
     if request.method == 'GET':
@@ -110,7 +110,7 @@ def list_event(user_name):
         starttime_list = []
         endtime_list = []
         response = dynamoTable.query(
-            KeyConditionExpression=Key('user_name').eq('Jiahao')
+            KeyConditionExpression=Key('user_name').eq(user_name)
         )
         items = response['Items']
         event_list = items[0]['event']
@@ -121,9 +121,29 @@ def list_event(user_name):
             count = count + 1
         return render_template('event/list_event.html', name_list=name_list, starttime_list=starttime_list,
                                endtime_list=endtime_list, count=count)
+    elif request.method == 'POST':
+        keyword = request.form['keyword']
+        count = 0
+        dynamoTable = dynamodb.Table('users')
+        name_list = []
+        starttime_list = []
+        endtime_list = []
+        response = dynamoTable.query(
+            KeyConditionExpression=Key('user_name').eq(user_name)
+        )
+        items = response['Items']
+        event_list = items[0]['event']
+        for event in event_list:
+            if keyword in event['name']:
+                name_list.append(event['name'])
+                starttime_list.append(event['start_time'])
+                endtime_list.append(event['end_time'])
+                count = count + 1
+        return render_template('event/list_event.html', name_list=name_list, starttime_list=starttime_list,
+                               endtime_list=endtime_list, count=count)
 
 
-# Add an event
+# Remove an event
 @webapp.route('/<string:user_name>/remove_event/<string:event_name>', methods=['POST'])
 @login_required
 def remove_event(user_name, event_name):
@@ -147,3 +167,4 @@ def remove_event(user_name, event_name):
             UpdateExpression=query
         )
         return redirect(url_for('list_event', user_name=user_name))
+
