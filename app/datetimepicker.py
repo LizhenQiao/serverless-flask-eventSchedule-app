@@ -1,10 +1,10 @@
 from flask import Flask, render_template
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms.fields import DateField
 from app import webapp
 
 
-class MyForm(Form):
+class MyForm(FlaskForm):
     date = DateField(id='datepick')
 
 
