@@ -8,7 +8,7 @@ webapp.config['SESSION_TYPE'] = 'filesystem'
 Bootstrap(webapp)
 from app import user
 from app import main
-from app import datetimepicker
+from app import event
 # Background Thread for garbage collection 
 from app import config
 import time
