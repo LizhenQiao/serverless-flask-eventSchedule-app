@@ -1,0 +1,38 @@
+{% extends "user/user_base.html" %}
+
+{% block title %} Home {% endblock %} {% block content %}
+
+    <div class="container">
+      <br>
+        <hr>
+      <h2 class="subtitle" style="color: #1d5987">The number of event you already have：{{ count }} </h2>
+      <table class="table table-hover">
+        <thead>
+          <tr class="table-info" style="color: #2d6987">
+            <th>Name</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%for i in range(0, count)%}
+            <td>{{ name_list[i]}}</td>
+            <td>{{ starttime_list[i]}}</td>
+            <td>{{ endtime_list[i]}}</td>
+            <td>
+                <button onclick="window.location.href =''" class="btn-warning">Edit</button>
+            </td>
+            <td>
+                <form action="{{url_for('remove_event', user_name=session['username'], event_name=name_list[i])}}" method='post' onsubmit='return confirm("Are you sure you want to remove the event?")'>
+                    <input type='submit' value='Remove' />
+                </form>
+            </td>
+            </tr>
+          {%endfor%}
+        </tbody>
+      </table>
+    </div>
+{% endblock %}
+

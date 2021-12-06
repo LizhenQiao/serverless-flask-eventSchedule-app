@@ -7,6 +7,7 @@ from passlib.hash import sha256_crypt
 from .utils import login_required
 from werkzeug.utils import secure_filename
 from app.config import KEY, SECRET, S3_BUCKET, S3_LOCATION
+from boto3.dynamodb.conditions import Key, Attr
 
 s3 = boto3.client(
     "s3",
@@ -98,53 +99,51 @@ def upload_avatar(user_name):
         return render_template('image/image_upload.html')
 
 
-# Add an event
-@webapp.route('/<string:user_name>/add_event', methods=['GET', 'POST'])
+# list all events
+@webapp.route('/<string:user_name>/list_event', methods=['GET'])
 @login_required
-def add_event(user_name):
-    if request.method == 'POST':
-        eventname= request.form['eventname']
-        starttime=request.form['starttime']
-        endtime=request.form['endtime']
+def list_event(user_name):
+    if request.method == 'GET':
+        count = 0
         dynamoTable = dynamodb.Table('users')
-        dynamoTable.update_item(
-            Key={
-                'user_name': session['username'],
-            },
-            UpdateExpression='SET event = list_append(:vals, event)',
-            ExpressionAttributeValues={
-                ':vals': [{'name': eventname,
-                           'start_time': starttime,
-                           'end_time': endtime}]
-            }
+        name_list = []
+        starttime_list = []
+        endtime_list = []
+        response = dynamoTable.query(
+            KeyConditionExpression=Key('user_name').eq('Jiahao')
         )
-        flash('Password change Successfully', category='info')
-        return
-    else:
-        return render_template('event/add_event.html')
+        items = response['Items']
+        event_list = items[0]['event']
+        for event in event_list:
+            name_list.append(event['name'])
+            starttime_list.append(event['start_time'])
+            endtime_list.append(event['end_time'])
+            count = count + 1
+        return render_template('event/list_event.html', name_list=name_list, starttime_list=starttime_list,
+                               endtime_list=endtime_list, count=count)
 
 
 # Add an event
-@webapp.route('/<string:user_name>/remove_event', methods=['GET', 'POST'])
+@webapp.route('/<string:user_name>/remove_event/<string:event_name>', methods=['POST'])
 @login_required
-def remove_event(user_name):
+def remove_event(user_name, event_name):
     if request.method == 'POST':
-        eventname= request.form['eventname']
-        starttime=request.form['starttime']
-        endtime=request.form['endtime']
         dynamoTable = dynamodb.Table('users')
+        # remove event in list
+        response = dynamoTable.query(
+            KeyConditionExpression=Key('user_name').eq(user_name)
+        )
+        items = response['Items']
+        event_list = items[0]['event']
+        for event in event_list:
+            if event['name'] == event_name:
+                event_idx = event_list.index(event)
+
+        query = 'REMOVE event[%d]' % (event_idx)
         dynamoTable.update_item(
             Key={
-                'user_name': session['username'],
+                'user_name': user_name,
             },
-            UpdateExpression='SET event = list_append(:vals, event)',
-            ExpressionAttributeValues={
-                ':vals': [{'name': eventname,
-                           'start_time': starttime,
-                           'end_time': endtime}]
-            }
+            UpdateExpression=query
         )
-        flash('Password change Successfully', category='info')
-        return
-    else:
-        return render_template('event/remove_event.html')
+        return redirect(url_for('list_event', user_name=user_name))

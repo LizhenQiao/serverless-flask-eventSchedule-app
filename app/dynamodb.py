@@ -32,7 +32,7 @@ for event in event_list:
     if event['name'] == 'ece1762':
         event_idx = event_list.index(event)
 
-query = 'REMOVE event[%d]" % (event_idx)'
+query = 'REMOVE event[%d]' % (event_idx)
 dynamoTable.update_item(
     Key={
         'user_name': 'Jiahao',
