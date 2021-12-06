@@ -1,5 +1,5 @@
 import boto3
-from flask import Flask, redirect, url_for, request, render_template, session
+from flask import Flask, redirect, url_for, request, render_template, session, flash
 from flask_wtf import FlaskForm
 from wtforms.fields.html5 import DateTimeField
 from wtforms.validators import DataRequired
@@ -27,7 +27,7 @@ class EventForm(FlaskForm):
 
 
 # list all events
-@webapp.route('/<string:user_name>/list_event', methods=['GET'])
+@webapp.route('/<string:user_name>/list_event', methods=['GET', 'POST'])
 @login_required
 def list_event(user_name):
     if request.method == 'GET':
@@ -48,6 +48,28 @@ def list_event(user_name):
             starttime_list.append(event['start_time'])
             endtime_list.append(event['end_time'])
             count = count + 1
+        return render_template('event/list_event.html', name_list=name_list, desc_list=desc_list,
+                               starttime_list=starttime_list, endtime_list=endtime_list, count=count)
+    elif request.method == 'POST':
+        keyword = request.form['keyword']
+        count = 0
+        dynamoTable = dynamodb.Table('users')
+        name_list = []
+        desc_list = []
+        starttime_list = []
+        endtime_list = []
+        response = dynamoTable.query(
+            KeyConditionExpression=Key('user_name').eq(user_name)
+        )
+        items = response['Items']
+        event_list = items[0]['event']
+        for event in event_list:
+            if keyword in event['name']:
+                name_list.append(event['name'])
+                desc_list.append(event['desc'])
+                starttime_list.append(event['start_time'])
+                endtime_list.append(event['end_time'])
+                count = count + 1
         return render_template('event/list_event.html', name_list=name_list, desc_list=desc_list,
                                starttime_list=starttime_list, endtime_list=endtime_list, count=count)
 
@@ -77,6 +99,9 @@ def add_event(user_name):
                 }
             )
             return redirect(url_for('list_event', user_name=user_name))
+        else:
+            flash("The end time of the event can't be earlier than the start time", category='error')
+            return render_template('event/add_event.html', form=eventform)
     return render_template('event/add_event.html', form=eventform)
 
 
