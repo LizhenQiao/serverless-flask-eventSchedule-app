@@ -1,7 +1,7 @@
 {% extends "bootstrap/base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block title %}Add Event{% endblock %}
+{% block title %}Edit Event{% endblock %}
 
 {% block head %}
   {{ super() }}
@@ -11,7 +11,7 @@
 
 {% block content %}
   <div class="container">
-    <h3>Enter details of the event</h3>
+    <h3>Edit details of the event</h3>
     <div class="row">
       <div class='col-sm-6'>
         {{ form.hidden_tag() }}

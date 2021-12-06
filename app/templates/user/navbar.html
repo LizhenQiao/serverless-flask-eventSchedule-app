@@ -28,7 +28,14 @@
         <li class="nav-item">
           <a
             class="nav-link"
-            href="{{url_for('change_pw', username=session['username']) }}"
+            href="{{url_for('list_event', user_name=session['username']) }}"
+            >Event List</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="{{url_for('change_pw', user_name=session['username']) }}"
             >Change Password</a
           >
         </li>

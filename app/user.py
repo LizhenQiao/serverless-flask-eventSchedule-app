@@ -26,9 +26,9 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-@webapp.route('/<string:username>/change_pw', methods=['GET', 'POST'])
+@webapp.route('/<string:user_name>/change_pw', methods=['GET', 'POST'])
 @login_required
-def change_pw(username):
+def change_pw(user_name):
     if request.method == 'POST':
         if request.form['new_password'] == '':
             flash("Error:Password can't be empty", category='error')
@@ -47,7 +47,7 @@ def change_pw(username):
                 }
             )
             flash('Password change Successfully', category='info')
-            return render_template('user/change_pw.html', username=session['username'])
+            return render_template('user/change_pw.html', user_name=session['username'])
     else:
         return render_template('user/change_pw.html')
 
@@ -97,53 +97,3 @@ def upload_avatar(user_name):
             return render_template('image/image_upload.html')
     else:
         return render_template('image/image_upload.html')
-
-
-# list all events
-@webapp.route('/<string:user_name>/list_event', methods=['GET'])
-@login_required
-def list_event(user_name):
-    if request.method == 'GET':
-        count = 0
-        dynamoTable = dynamodb.Table('users')
-        name_list = []
-        starttime_list = []
-        endtime_list = []
-        response = dynamoTable.query(
-            KeyConditionExpression=Key('user_name').eq('Jiahao')
-        )
-        items = response['Items']
-        event_list = items[0]['event']
-        for event in event_list:
-            name_list.append(event['name'])
-            starttime_list.append(event['start_time'])
-            endtime_list.append(event['end_time'])
-            count = count + 1
-        return render_template('event/list_event.html', name_list=name_list, starttime_list=starttime_list,
-                               endtime_list=endtime_list, count=count)
-
-
-# Add an event
-@webapp.route('/<string:user_name>/remove_event/<string:event_name>', methods=['POST'])
-@login_required
-def remove_event(user_name, event_name):
-    if request.method == 'POST':
-        dynamoTable = dynamodb.Table('users')
-        # remove event in list
-        response = dynamoTable.query(
-            KeyConditionExpression=Key('user_name').eq(user_name)
-        )
-        items = response['Items']
-        event_list = items[0]['event']
-        for event in event_list:
-            if event['name'] == event_name:
-                event_idx = event_list.index(event)
-
-        query = 'REMOVE event[%d]' % (event_idx)
-        dynamoTable.update_item(
-            Key={
-                'user_name': user_name,
-            },
-            UpdateExpression=query
-        )
-        return redirect(url_for('list_event', user_name=user_name))
