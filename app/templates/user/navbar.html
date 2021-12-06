@@ -7,7 +7,11 @@
   "
 >
   <div class="container-fluid">
-    <a class="navbar-brand" href="{{url_for('user_page', username=session['username'])}}">Home</a>
+    <a
+      class="navbar-brand"
+      href="{{url_for('user_page', username=session['username'])}}"
+      >Home</a
+    >
     <button
       class="navbar-toggler"
       type="button"
@@ -22,21 +26,17 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('worker_list') }}"
-            >Worker List</a
-          >
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href=""
-            >Setting</a
-          >
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="">Stop</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{url_for('change_pw', username=session['username']) }}"
+          <a
+            class="nav-link"
+            href="{{url_for('change_pw', username=session['username']) }}"
             >Change Password</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="{{url_for('upload_avatar', user_name=session['username'])}}"
+            >Set Avatar</a
           >
         </li>
         <li class="nav-item">

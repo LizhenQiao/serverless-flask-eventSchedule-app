@@ -1,4 +1,0 @@
-mysql_host: "database-ece1779.cgfkfsttferr.us-east-1.rds.amazonaws.com"
-mysql_user: "admin"
-mysql_password: "12345678"
-mysql_db: "ece1779_project"
