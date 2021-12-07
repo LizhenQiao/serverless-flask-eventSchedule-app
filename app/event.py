@@ -41,7 +41,10 @@ def list_event(user_name):
             KeyConditionExpression=Key('user_name').eq(user_name)
         )
         items = response['Items']
-        event_list = items[0]['event']
+        if items and 'event' in items[0] and items[0]['event']:
+            event_list = items[0]['event']
+        else:
+            event_list = []
         for event in event_list:
             name_list.append(event['name'])
             desc_list.append(event['desc'])
