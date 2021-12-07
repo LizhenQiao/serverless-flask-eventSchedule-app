@@ -1,0 +1,69 @@
+{% extends "user/user_base.html" %}
+
+{% block title %} Home {% endblock %} {% block content %}
+
+    <div class="container">
+      <br>
+        <hr>
+      <h2 class="subtitle" style="color: #1d5987">The number of event you already have：{{ count }} </h2>
+      <form action="{{url_for('list_event', user_name=session['username'])}}"
+            method='GET'>
+          <button type="submit" class="btn btn-primary">List All</button>
+      </form>
+      <form
+        action="{{url_for('list_event', user_name=session['username'])}}"
+        method="POST"
+      >
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Key word</label>
+          <input
+            type="text"
+            name="keyword"
+            class="form-control"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+      <table class="table table-hover">
+        <thead>
+          <tr class="table-info" style="color: #2d6987">
+            <th>Name</th>
+            <th>Description</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%for i in range(0, count)%}
+            <td>{{ name_list[i] }}</td>
+            <td>{{ desc_list[i] }}</td>
+            <td>{{ starttime_list[i] }}</td>
+            <td>{{ endtime_list[i] }}</td>
+            <td>
+                <form action="{{url_for('edit_event', user_name=session['username'], event_name=name_list[i])}}" method='get'>
+                    <input type='submit' class="btn btn-primary" value='Edit' />
+                </form>
+            </td>
+            <td>
+                <form action="{{url_for('remove_event', user_name=session['username'], event_name=name_list[i])}}" method='post' onsubmit='return confirm("Are you sure you want to remove the event?")'>
+                    <input type='submit' class="btn btn-primary" value='Remove' />
+                </form>
+            </td>
+            </tr>
+          {%endfor%}
+        </tbody>
+      </table>
+      <br />
+      <br />
+
+      <form action="{{url_for('add_event', user_name=session['username'])}}" method="get">
+        <input type="submit" class="btn btn-primary" value="Add Event" />
+      </form>
+      <br />
+    </div>
+{% endblock %}
+

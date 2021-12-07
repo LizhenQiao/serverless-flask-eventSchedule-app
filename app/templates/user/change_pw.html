@@ -1,0 +1,36 @@
+{% extends "user/user_base.html" %}
+<!--                        -->
+{% block title %} change password {% endblock %} {% block content %}
+
+<br />
+<div class="container">
+  <h1>Change Password</h1>
+
+  <form
+    action="{{url_for('change_pw', user_name=session['username'])}}"
+    method="POST"
+  >
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">New Password</label>
+      <input
+        type="password"
+        name="new_password"
+        class="form-control"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+  </form>
+  {% with messages = get_flashed_messages(with_categories=true) %} {% if
+  messages %}
+  <ul class="flashes">
+    {% for category, message in messages %} {% if category =='error'%}
+    <li style="color: red">{{ message }}</li>
+    {% else %}
+    <li style="color: green">{{ message }}</li>
+    {% endif %} {% endfor %}
+  </ul>
+  {% endif %} {% endwith %}
+</div>
+{% endblock %}

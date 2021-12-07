@@ -1,0 +1,46 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Add Event{% endblock %}
+
+{% block head %}
+  {{ super() }}
+  <link type="text/css"  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+  <link type="text/css"  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css">
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h3>Enter details of the event</h3>
+    <div class="row">
+      <div class='col-sm-6'>
+        {{ form.hidden_tag() }}
+        {{ wtf.quick_form(form) }}
+      </div>
+    </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+          <ul class="flashes">
+              {% for category, message in messages %} {% if category =='error'%}
+                  <li style="color: red">{{ message }}</li>
+              {% else %}
+                  <li style="color: green">{{ message }}</li>
+              {% endif %} {% endfor %}
+          </ul>
+      {% endif %}
+    {% endwith %}
+  </div>
+
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $('#startdatetimepicker').datetimepicker();
+      $('#enddatetimepicker').datetimepicker();
+    });
+  </script>
+{% endblock %}

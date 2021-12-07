@@ -1,0 +1,47 @@
+{% extends "user/user_base.html" %}
+<!--                        -->
+{% block title %} Home {% endblock %} {% block content %}
+<body>
+  <img src="{{ useravatar }}"" style="height: 200px; width: 200px;" />
+  <h3>{{username}}</h3>
+  <div style="height: 75px"></div>
+  <div></div>
+  <div class="accordion" id="accordionPanelsStayOpenExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+        <button
+          class="accordion-button"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#panelsStayOpen-collapseOne"
+          aria-expanded="true"
+          aria-controls="panelsStayOpen-collapseOne"
+        >
+          Functions of normal users
+        </button>
+      </h2>
+      <div
+        id="panelsStayOpen-collapseOne"
+        class="accordion-collapse collapse show"
+        aria-labelledby="panelsStayOpen-headingOne"
+      >
+        <div class="accordion-body">
+          <strong
+            >you can access all the functions by clicking the navigation bar at
+            the top of the page. <br
+          /></strong>
+          <strong>- Home:</strong> redirect to homepage. <br />
+          <strong>- Upload:</strong> you could upload images either by typing in
+          an accessable URL or choosing from your local files. <br />
+          <strong>- Album:</strong> you could view all your images and related
+          images transformed here. <br />
+          <strong>- Change Password:</strong> you could change password of the
+          account you are currently login. <br />
+          <strong>- Logout:</strong> you could logout the account and redirect
+          to the entrance page by clicking Logout. <br />
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+{% endblock %}
