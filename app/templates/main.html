@@ -38,6 +38,10 @@
         <div style="height: 16px"></div>
       </form>
       <a href="{{url_for('register')}}" class="btn btn-primary">register</a>
+      <div style="height: 16px"></div>
+      <a href="{{url_for('password_recovery')}}" class="btn btn-primary"
+        >password recovery</a
+      >
       {% with messages = get_flashed_messages(with_categories=true) %} {% if
       messages %}
       <ul class="flashes">
