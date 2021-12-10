@@ -1,0 +1,40 @@
+{% extends "user/user_base.html" %} {% block title %} Home {% endblock %} {%
+block content %}
+
+<br />
+<h2>MessageBox</h2>
+<br />
+
+<table class="table table-border">
+  <thead>
+    <th>RequestUser</th>
+    <th>EventName</th>
+    <th>EventDetail</th>
+    <th>StartTime</th>
+    <th>Endtime</th>
+    <th>Contact</th>
+  </thead>
+  {% if appointmentInfo %}
+  <tr>
+    <td>{{ appointmentInfo['request_username'] }}</td>
+    <td>{{ appointmentInfo['event']['eventname'] }}</td>
+    <td>{{ appointmentInfo['event']['eventdesc']}}</td>
+    <td>{{ appointmentInfo['event']['starttime'] }}</td>
+    <td>{{ appointmentInfo['event']['endtime'] }}</td>
+    <td>{{ appointmentInfo['event']['contact'] }}</td>
+  </tr>
+  {% endif %} {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  <ul class="flashes">
+    {% for category, message in messages %} {% if category =='error'%}
+    <li style="color: red">{{ message }}</li>
+    {% else %}
+    <li style="color: green">{{ message }}</li>
+    {% endif %} {% endfor %}
+  </ul>
+  {% endif %} {% endwith %}
+</table>
+
+<br />
+<br />
+{% endblock %}

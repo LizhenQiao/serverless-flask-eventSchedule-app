@@ -1,0 +1,35 @@
+{% extends "user/user_base.html" %}
+
+{% block title %} Home {% endblock %} {% block content %}
+    <div style="font-size: 36px;">{{host_username}}'s timetable</div>
+    <div class="container">
+      <br>
+        <hr>
+      <table class="table table-hover">
+        <thead>
+          <tr class="table-info" style="color: #2d6987">
+            <th>Name</th>
+            <th>Description</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%for i in range(0, count)%}
+            <td style="background-color: darkgrey;">Secret</td>
+            <td style="background-color: darkgrey;">Secret</td>
+            <td>{{ starttime_list[i] }}</td>
+            <td>{{ endtime_list[i] }}</td>
+            </tr>
+          {%endfor%}
+        </tbody>
+      </table>
+      <br />
+      <br />
+      <form action="{{url_for('make_appointment', request_username=session['username'], host_username=host_username)}}" method="get">
+        <input type="submit" class="btn btn-primary" value="Make an appointment" />
+      </form>
+      <br />
+    </div>
+{% endblock %}
+

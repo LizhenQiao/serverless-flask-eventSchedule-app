@@ -1,0 +1,38 @@
+{% extends "user/user_base.html" %} {% block title %} Home {% endblock %} {%
+block content %}
+
+<div style="font-size: 36px">Friends List</div>
+<div class="container">
+  <br />
+  <hr />
+  <table class="table table-hover">
+    <tbody>
+      {% for userinfo in userinfoList %}
+      <tr>
+        <td>
+          <img
+            src="{{userinfo[1]}}"
+            alt="https://a3avatars.s3.amazonaws.com/default.jpg"
+            style="width: 72px; height: 72px"
+          />
+          <div style="font-size: 26px">{{ userinfo[0] }}</div>
+        </td>
+        <td>
+          <form action="{{ url_for('show_timetable', user_name=userinfo[0]) }}">
+            <input
+              type="submit"
+              class="btn btn-primary"
+              value="Details"
+              style="margin-top: 32px"
+            />
+          </form>
+        </td>
+      </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+  <br />
+  <br />
+  <br />
+</div>
+{% endblock %}

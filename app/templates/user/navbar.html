@@ -35,6 +35,13 @@
         <li class="nav-item">
           <a
             class="nav-link"
+            href="{{url_for('friends_list', user_name=session['username'])}}"
+            >Friends</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
             href="{{url_for('change_pw', user_name=session['username']) }}"
             >Change Password</a
           >
@@ -44,6 +51,13 @@
             class="nav-link"
             href="{{url_for('upload_avatar', user_name=session['username'])}}"
             >Set Avatar</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="{{url_for('message_box', user_name=session['username'])}}"
+            >MessageBox</a
           >
         </li>
         <li class="nav-item">
