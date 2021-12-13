@@ -1,0 +1,27 @@
+﻿Group hierarchy,Region,Description,Service,Upfront,Monthly,First 12 months total,Currency,Configuration summary
+My Estimate > a3_10,US East (N. Virginia),,S3 Standard,0,0.01,0.12,USD,S3 Standard storage (0.1 GB per month)
+My Estimate > a3_10,US East (N. Virginia),,Data Transfer,0,0,0.00,USD,
+My Estimate > a3_10,US East (N. Virginia),,Amazon API Gateway,0,0.003,0.04,USD,"HTTP API requests units (thousands), Average size of each request (30 KB), REST API request units (millions), Cache memory size (GB) (None), WebSocket message units (thousands), Average message size (32 KB), Requests (3 per month)"
+My Estimate > a3_10,US East (N. Virginia),,DynamoDB provisioned capacity,0,5.49,65.88,USD,"Average item size (all attributes) (10 KB), Write reserved capacity term (1 year), Read reserved capacity term (1 year), Data storage size (1 GB)"
+My Estimate > a3_10,US East (N. Virginia),,DynamoDB Data export to Amazon S3,0,0,0.00,USD,
+My Estimate > a3_10,US East (N. Virginia),,AWS Lambda,0,0,0.00,USD,"Architecture (x86), Architecture (x86), Number of requests (1000 per month)"
+My Estimate > a3_10,US East (N. Virginia),,Amazon Simple Email Service (SES),0,0.15,1.80,USD,"Email messages sent from EC2 ( per month), Email messages sent from email client (300 per month)"
+My Estimate > a3_1000,US East (N. Virginia),,Amazon Simple Email Service (SES),0,9,108.00,USD,"Email messages sent from EC2 ( per month), Email messages sent from email client (30000 per month)"
+My Estimate > a3_1000,US East (N. Virginia),,AWS Lambda,0,0,0.00,USD,"Architecture (x86), Architecture (x86), Number of requests (100000 per month)"
+My Estimate > a3_1000,US East (N. Virginia),,DynamoDB provisioned capacity,0,77.42,929.04,USD,"Average item size (all attributes) (10 KB), Write reserved capacity term (1 year), Read reserved capacity term (1 year), Data storage size (100 GB)"
+My Estimate > a3_1000,US East (N. Virginia),,DynamoDB Data export to Amazon S3,0,0,0.00,USD,
+My Estimate > a3_1000,US East (N. Virginia),,Amazon API Gateway,0,1,12.00,USD,"HTTP API requests units (millions), Average size of each request (30 KB), REST API request units (millions), Cache memory size (GB) (None), WebSocket message units (thousands), Average message size (32 KB), Requests (1 per month)"
+My Estimate > a3_1000,US East (N. Virginia),,S3 Standard,0,0.55,6.60,USD,S3 Standard storage (10 GB per month)
+My Estimate > a3_1000,US East (N. Virginia),,Data Transfer,0,0,0.00,USD,
+My Estimate > a3_1000000,US East (N. Virginia),,S3 Standard,0,354.03,4248.36,USD,S3 Standard storage (1 TB per month)
+My Estimate > a3_1000000,US East (N. Virginia),,Data Transfer,0,0,0.00,USD,
+My Estimate > a3_1000000,US East (N. Virginia),,Amazon API Gateway,0,930,11160.00,USD,"HTTP API requests units (billions), Average size of each request (30 KB), REST API request units (millions), Cache memory size (GB) (None), WebSocket message units (thousands), Average message size (32 KB), Requests (1 per month)"
+My Estimate > a3_1000000,US East (N. Virginia),,DynamoDB provisioned capacity,0,4044.2,48530.40,USD,"Average item size (all attributes) (10 KB), Write reserved capacity term (1 year), Read reserved capacity term (1 year), Data storage size (1 TB)"
+My Estimate > a3_1000000,US East (N. Virginia),,DynamoDB Data export to Amazon S3,0,0,0.00,USD,
+My Estimate > a3_1000000,US East (N. Virginia),,AWS Lambda,0,221.47,2657.64,USD,"Architecture (x86), Architecture (x86), Number of requests (100000000 per month)"
+My Estimate > a3_1000000,US East (N. Virginia),,Amazon Simple Email Service (SES),0,900,10800.00,USD,"Email messages sent from EC2 ( per month), Email messages sent from email client (3000000 per month)"
+
+
+
+Acknowledgement
+"* AWS Pricing Calculator provides only an estimate of your AWS fees and doesn't include any taxes that might apply. Your actual fees depend on a variety of factors, including your actual usage of AWS services."

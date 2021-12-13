@@ -2,6 +2,8 @@
 
 ---
 
+Entrance of App: https://2a9x6m52u3.execute-api.us-east-1.amazonaws.com/dev
+
 - [Anouncement](#anouncement)
 - [Introduction - how to use the web application](#introduction)
 - [Details](#details)
@@ -18,7 +20,7 @@ In this document, we will explain the important parts of our application and int
 
 # Introduction
 
-<h4>A serverless event schedule list application which have Remind, Friends and Appointments functions, which aims to improve the efficiency of work.</h4>
+<h4>A serverless event schedule list application which have Remind, Friends and Appointments functions,  aims to improve the efficiency of work.</h4>
 
 **Functions**
 The details will be shown in the _Detail_ part.
@@ -74,7 +76,7 @@ Others:
 
 <div style="display: flex; justify-content: flex-start">
   <div>
-    <img src="./static/aws_architecture.jpg"></img>
+    <img src="./static/architecture.png"></img>
   </div>
 </div>
 <br />
@@ -171,7 +173,7 @@ You could set or change your avatar here, the used avatar will be deleted from s
 
 ### Garbage collection and clearing
 
-This is a AWS lambda function we use to auto-collect and clear the garbage files in our s3 bucket.
+We have a AWS lambda function used to auto-collect and clear the garbage files in our s3 bucket. It will be triggered when anything changed in the S3 bucket.
 
 ```
 import json
@@ -278,3 +280,35 @@ def lambda_handler(event, context):
 ```
 
 # Cost Model
+
+We use **AWS Pricing Calculator** to calclate our cost when we have 10, 1000, 1000,000 users. You could find details in _./cost_model.csv_
+
+---
+
+**Assumptions**:
+
+- 50% of the users are _active_ users. For example: when we have 1000,000 users in total, 500,000 of them are active in average.
+- Each user will make over 100 requests every month considering that our application is http-rich. (Acctually it is normal for a user to make thousands of requests per month. We made this over 200 assumption in case that in reality most of the user will not last.)
+
+---
+
+**Cost Model**
+According to our Cost Model, we have the cost table of six months shown as below:
+
+- 10 users: $33.9 per 6 months
+- 1000 users: $527.82 per 6 months
+- 1000,000 users: $38698.2 per 6 months
+  <img src="./static/cost1.png"></img>
+
+**Details of cost**
+
+- **10 users**:
+  <img src="./static/costdetail1.png"></img>
+  <br />
+  <br />
+- 1000 users:
+  <img src="./static/costdetail2.png"></img>
+  <br />
+  <br />
+- 1000,000 users:
+  <img src="./static/costdetail3.png"></img>
